@@ -1,0 +1,29 @@
+CREATE DATABASE product;
+
+USE product;
+
+CREATE TABLE mobile_phone
+(
+product_id INT PRIMARY KEY NOT NULL,
+product_name VARCHAR(30) NOT NULL,
+brand VARCHAR (30) NOT NULL,
+amount INT,
+price INT NOT NULL
+);
+
+INSERT mobile_phone (product_id, product_name, brand, amount, price)
+VALUES
+(1, "nova Y90", "Huawei", 3, 16990),
+(2, "Galaxy A73", "Samsung", 2, 39290),
+(3, "Redmi 9A", "Xiaomi", 5, 5490),
+(4, "Galaxy A13", "Samsung", 2, 12690),
+(5, "C25s", "REALME", 1, 8990),
+(6, "Poco C40", "Xiaomi", 3, 7490);
+
+SELECT product_name, brand, price
+FROM mobile_phone
+WHERE amount > 2;
+
+SELECT *
+FROM mobile_phone
+WHERE brand = "Samsung";
