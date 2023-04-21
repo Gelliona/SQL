@@ -1,0 +1,28 @@
+CREATE DATABASE market;
+
+USE market;
+
+CREATE TABLE sales 
+(
+id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+order_date DATE NOT NULL,
+bucket INT NOT NULL
+);
+
+INSERT INTO sales (order_date, bucket)
+VALUES
+('2021-01-01', 205),
+('2021-01-02', 93),
+('2021-01-03', 299),
+('2021-01-04', 315),
+('2021-01-05', 154),
+('2021-01-05', 85),
+('2021-01-05', 308),
+('2021-01-05', 321);
+
+SELECT * FROM sales;
+
+SELECT order_date, bucket,
+  IF(bucket <= 100, 'Small order', IF(bucket > 300, 'Big order', 'Middle order')) AS orders
+FROM sales
+ORDER BY bucket;
