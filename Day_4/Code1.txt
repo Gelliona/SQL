@@ -1,0 +1,35 @@
+CREATE DATABASE automarket;
+
+USE automarket;
+
+CREATE TABLE auto 
+(       
+	regnum VARCHAR(10) PRIMARY KEY, 
+	mark VARCHAR(10), 
+	color VARCHAR(15),
+	released DATE, 
+	phonenum VARCHAR(15)
+);
+
+INSERT INTO auto (regnum, mark,	color, released, phonenum)
+VALUES
+('111114', 'LADA', 'КРАСНЫЙ', '2008-01-01', '9152222221'),
+('111115', 'VOLVO', 'КРАСНЫЙ', '2013-01-01', '9173333334'),
+('111116', 'BMW', 'СИНИЙ', '2015-01-01', '9173333334'),
+('111121', 'AUDI', 'СИНИЙ', '2009-01-01', '9173333332'),
+('111122', 'AUDI', 'СИНИЙ', '2011-01-01', '9213333336'),
+('111113', 'BMW', 'ЗЕЛЕНЫЙ', '2007-01-01', '9214444444'),
+('111126', 'LADA', 'ЗЕЛЕНЫЙ', '2005-01-01', null),
+('111117', 'BMW', 'СИНИЙ', '2005-01-01', null),
+('111119', 'LADA', 'СИНИЙ', '2017-01-01', 9213333331);
+
+# 1. Вывести на экран сколько машин каждого цвета для машин марок BMW и LADA
+SELECT mark, color, COUNT(color) FROM auto
+WHERE mark = 'BMW' OR mark = 'LADA'
+GROUP BY mark, color
+ORDER BY mark;
+
+# 2. Вывести на экран марку авто и количество AUTO не этой марки
+SELECT mark, total-COUNT(mark) AS amount_of_others FROM auto
+JOIN (SELECT COUNT(*) AS total FROM auto) AS new_data
+GROUP BY mark, total;
