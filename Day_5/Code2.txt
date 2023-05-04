@@ -1,0 +1,66 @@
+CREATE DATABASE mydb3;
+USE mydb3;
+
+CREATE TABLE an_groups (
+gr_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+gr_name VARCHAR(30) NOT NULL,
+gr_temp INT NOT NULL);
+
+CREATE TABLE analysis (
+an_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+an_name VARCHAR(30) NOT NULL,
+an_cost INT NOT NULL,
+an_price INT NOT NULL,
+an_group INT NOT NULL,
+FOREIGN KEY (an_group) REFERENCES an_groups(gr_id) ON DELETE CASCADE);
+
+CREATE TABLE orders (
+ord_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+ord_datetime DATETIME NOT NULL,
+ord_an INT NOT NULL,
+FOREIGN KEY (ord_an) REFERENCES analysis(an_id) ON DELETE CASCADE);
+
+INSERT INTO an_groups (gr_name, gr_temp) VALUES
+('biochemical', 6),
+('hormonal', 8),
+('hematological', 12),
+('tumor_markers', 3);
+
+INSERT INTO analysis (an_name, an_cost, an_price, an_group) VALUES
+('Fructosamine', 300, 720, 1),
+('Lactate', 280, 685, 1),
+('Albumin', 140, 280, 1),
+('Homocysteine', 950, 1530, 1),
+('ACTH', 520, 945, 2),
+('Cortisol', 200, 500, 2),
+('Pregnenolone', 2200, 3560, 2),
+('Thyroglobulin', 515, 825, 2),
+('Complete_Blood_Count', 85, 270, 3),
+('ESR', 50, 185, 3),
+('Blood_group', 120, 265, 3),
+('Rh­factor', 115, 265, 3),
+('alfa-Fetoprotein', 290, 455, 4),
+('PSA_total', 320, 590, 4),
+('CEA', 475, 725, 4);
+
+
+INSERT INTO orders (ord_datetime, ord_an) VALUES
+('2020-01-25 08:00:00', 12),
+('2020-01-25 08:10:00', 15),
+('2020-02-05 08:00:00', 3),
+('2020-02-05 08:15:00', 11),
+('2020-02-06 08:00:00', 9),
+('2020-02-06 09:00:00', 4),
+('2020-02-07 08:25:00', 5),
+('2020-02-07 08:40:00', 7),
+('2020-02-07 09:20:00', 9),
+('2020-02-08 08:00:00', 13),
+('2020-02-13 08:15:00', 11),
+('2020-02-13 09:15:00', 9),
+('2020-02-15 08:10:00', 9);
+
+
+SELECT orders.ord_datetime, analysis.an_name, analysis.an_price
+FROM orders
+LEFT JOIN analysis ON analysis.an_id = orders.ord_an
+WHERE ord_datetime >= '2020-02-05 00:00:00' AND ord_datetime <= '2020-02-11 23:59:59';
