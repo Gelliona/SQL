@@ -1,0 +1,21 @@
+# Выведите только четные числа от 1 до 10 включительно.
+# Пример: 2,4,6,8,10 (можно сделать через шаг + 2: х = 2, х+=2)
+
+DELIMITER //
+CREATE PROCEDURE even_numbers()
+BEGIN
+DECLARE num INT default 0;
+DECLARE result VARCHAR(255) default '';
+REPEAT
+SET num = num + 2;
+SET RESULT = concat(result, num, ', ');
+UNTIL num = 8
+END REPEAT;
+SET num = num + 2;
+SET RESULT = concat(result, num, ' ');
+SELECT result;
+END //
+DELIMITER ;
+
+
+call even_numbers();

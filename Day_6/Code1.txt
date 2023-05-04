@@ -1,0 +1,23 @@
+# Создайте функцию, которая принимает кол-во сек и форматирует их в кол-во дней, часов, минут и секунд.
+# Пример: 123456 ->'1 days 10 hours 17 minutes 36 seconds '
+
+DELIMITER //
+CREATE FUNCTION timeformat(num INT)
+RETURNS VARCHAR(255) DETERMINISTIC
+BEGIN
+DECLARE sec int default 0;
+DECLARE mins int default 0;
+DECLARE hours int default 0;
+DECLARE days int default 0;
+DECLARE str VARCHAR(255) default '';
+SET sec = num % 60;
+SET mins = num DIV 60 % 60;
+SET hours = num DIV 60 DIV 60 % 24;
+SET days = num DIV 60 DIV 60 DIV 24;
+SET str = concat(days, ' days ', hours, ' hours ', mins, ' minutes ', sec, ' seconds');
+RETURN str;
+END //
+DELIMITER ;
+
+
+SELECT timeformat(123456);
